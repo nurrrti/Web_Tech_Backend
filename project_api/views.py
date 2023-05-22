@@ -7,20 +7,6 @@ from .permissions import IsStaffOrNot  # custom permission for accessing api
 from rest_framework import viewsets
 
 
-# API Root 127.0.0.1:{Port_value_here or 8000 by default}/api
-# class APIRoot(APIView):
-#     permission_classes = [permissions.IsAuthenticated, IsStaffOrNot]
-
-#     def get(self, request, format=None):
-#         return response.Response({
-#             'artiles-list': reverse.reverse('pro_api:api-articles-list', request=request, format=format),
-#             'users-list': reverse.reverse('pro_api:api-users-list', request=request, format=format),
-#             'editors-list': reverse.reverse('pro_api:api-editors-list', request=request, format=format),
-#             'comments-list': reverse.reverse('pro_api:api-comments-list', request=request, format=format)
-#         })
-
-
-# API: CBV for getting all articles
 class APIBookViewSet(viewsets.ModelViewSet):
 
     queryset = Book.objects.order_by('-book_date')
@@ -35,10 +21,10 @@ class APIBookViewSet(viewsets.ModelViewSet):
 
 
 # API: CBV for getting all editors
-class APIEditorsViewSet(viewsets.ModelViewSet):
+class APIAuthorsViewSet(viewsets.ModelViewSet):
 
     queryset = Author.objects.all()
-    serializer_class = EditorSerializer
+    serializer_class = AuthorSerializer
     permission_classes = [permissions.IsAuthenticated, IsStaffOrNot]
 
     def get_serializer(self, *args, **kwargs):

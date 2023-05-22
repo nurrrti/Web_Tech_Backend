@@ -7,6 +7,6 @@ urlpatterns = [
         path('admin/', admin.site.urls),
         path('', include('bookapp.urls')),
         path('api/', include('project_api.urls')),
-        path('api/', include('rest_framework.urls')),  # will be added login button
-        path('', include('django.contrib.auth.urls')),  # login url, logout url
+        path('api/', include('rest_framework.urls')),
+        path('', include('django.contrib.auth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,16 +2,7 @@ from django.db.models import Q, CharField, TextField
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import *
-
 from .forms import *
-
-
-def register(request):
-    return render(request, 'books/register.html')
-
-
-def login(request):
-    return render(request, 'books/login.html')
 
 
 class IndexView(ListView):

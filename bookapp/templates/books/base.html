@@ -15,8 +15,18 @@
     <a class="p-2 text-dark" href="#">Features</a>
     <a href="tel:+77478325195">Support</a>
     <a class="p-2 text-dark" href="#">Pricing</a>
-      <a class="btn btn-outline-primary" href="#" >Login</a>
-      <a class="btn btn-outline-primary" href="#">Registration</a>
+      <div class="col-lg-2 col-md-4">
+                        <div class="b-search">
+                            <form class="" action="{%url 'bookapp:search_book_by_text' %}" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="search_field" value="" method='POST' placeholder="Search here" required>
+                                <!-- <input type="submit" name="Search" value="Search"> -->
+
+                            </form>
+
+                        </div>
+                    </div>
+      <a class="btn btn-outline-primary" href="{% url 'login' %}" >Login</a>
   </nav>
 </div>
     <div class="container">

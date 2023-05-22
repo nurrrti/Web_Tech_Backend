@@ -1,0 +1,35 @@
+{% extends 'books/base.html' %}
+{%block title%} Search Results {%endblock%}
+{% block content %}
+<div class="top-news">
+  <div class="container">
+
+  <div class="col-lg-2 col-md-4">
+                        <div class="b-search">
+                            <form class="" action="{%url 'bookapp:search_book_by_text' %}" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="search_field" value="" method='POST' placeholder="Search here" required>
+                                <!-- <input type="submit" name="Search" value="Search"> -->
+
+                            </form>
+
+                        </div>
+                    </div>
+
+    {% for book in search_res%}
+    <div class="row">
+      <ol>
+        <li value="{{forloop.counter}}">
+          <a href="{% url 'bookapp:get_book_by_id' book.id %}">
+          {{book.book_name}}
+        </a>
+        </li>
+      </ol>
+  </div>
+      {% empty %}
+      {{empty_res}}
+      {%endfor%}
+
+  </div>
+</div>
+{% endblock%}

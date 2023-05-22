@@ -29,11 +29,16 @@ class Book(models.Model):
 
     book_date = models.DateTimeField(auto_now_add=True)
 
+    book_document = models.FileField(upload_to='doc/')
+
     book_rating = models.FloatField(default=0.0)
 
     book_num_of_views = models.IntegerField(default=0)
 
     book_author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.book_created
 
     def __str__(self) -> str:
         return self.book_name

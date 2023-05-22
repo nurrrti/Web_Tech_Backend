@@ -1,0 +1,152 @@
+{% extends "books/base.html" %}
+{% block title %}
+  {{ book.book_name }}
+{% endblock %}
+{%load static%}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% block content %}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+  <div class="container">
+      <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Book</a></li>
+          <li class="breadcrumb-item active">News details</li>
+      </ul>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Single News Start-->
+<div class="single-news">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8">
+            {% if book %}
+              <div class="sn-container">
+                  <div class="sn-content">
+                      <h1 class="sn-title"> {{book.book_name}} </h1>
+                      <p>Book Image:  <img src="{{book.book_image}}" alt=""></p>
+                         <p>Dob: {{user.last_login}}</p>
+                     <p>Book IMG URL: {{book.book_photos.url}}</p>
+                      <p> <b>Date: </b>{{book.book_date}}</p>
+                      <p> <b>Rating:</b>  {{book.book_rating}}</p>
+                      <p> <b>Views:</b>  {{book.book_num_of_views}} times</p>
+                      <p><b>Likes:</b> {{book.book_rating}} </p>
+                      <p><b>Written by:</b> {{book.book_author.author_name}} {{book.book_author.author_surname}}</p>
+                      <p>{{book.book_text}}</p>
+                      {% if user.is_authenticated %}
+                            <form action="{% url 'bookapp:like_book' %}" method="post">
+                                {% csrf_token %}
+                                Do you like this book?:
+                                <input type="radio" name="book_rate" value="1" onclick="this.form.submit()" class="fa fa-heart">
+                                <input type="hidden" name="book_id" value="{{book.id}}">
+                            </form>
+                            {%endif%}
+
+
+                  </div>
+              </div>
+              <div class="sn-related">
+                  <h2>Commentaries Section:</h2>
+
+                  <h3>Previous comments:</h3>
+                    {% if comments_on_book %}
+                        {% for comment in comments_on_book %}
+                        <ul>
+                            <li><b>*{{comment.comment_owner}} left this on {{comment.comment_date}}: *</b></li>
+                            <p>{{comment.comment_text}} ({{comment.comment_rating}} people liked this comment)</p>
+                            {% if user.is_authenticated %}
+                            <form action="{% url 'bookapp:like_comment' %}" method="post" id="rateForm">
+                                {% csrf_token %}
+                                Like this comment:
+                                <input type="radio" name="comment_rate" value="1" onclick="this.form.submit()" class="fa fa-heart">
+                                <input type="hidden" name="comment_id" value="{{comment.id}}">
+                                <input type="hidden" name="article_id" value="{{article.id}}">
+                            </form>
+                            {%endif%}
+
+                        </ul>
+                        {%endfor%}
+                    {%endif%}
+                    {% if user.is_authenticated %}
+                  <form action="{% url 'bookapp:leave_comment' %}" method="post">
+                      {% csrf_token %}
+                      <h3>Share your thoughts:</h3>
+                        <input type="hidden" value="{{book.id}}" name="{{form.comment_on_book.name}}">
+                      <textarea name="{{form.comment_text.name}}" cols="80%" rows="5%" required></textarea>
+                    <input type="submit" value="Send">
+                </form>
+                    {%endif%}
+              </div>
+              {% else %}
+              <p>No such article with id </p>
+              {%endif%}
+          </div>
+
+          <div class="col-lg-4">
+              <div class="sidebar">
+                  <div class="sidebar-widget">
+                    {%if related_books%}
+                      <h2 class="sw-title">In This Category "{{object.book_category|title}}"</h2>
+                      <div class="news-list">
+
+                        {%for book in related_books%}
+                        {% if forloop.counter < 5 %}
+                          <div class="nl-item">
+                              <div class="nl-title">
+                                  <a href="{%url 'bookapp:get_book_by_id' book.id %}">{{book.book_name|truncatewords:3}}</a>
+                              </div>
+                          </div>
+                          {%endif%}
+                          {%endfor%}
+                          {%endif%}
+                      </div>
+                  </div>
+                  <div class="sidebar-widget">
+                      <div class="tab-books">
+                          <ul class="nav nav-pills nav-justified">
+                              <li class="nav-item">
+                                  <a class="nav-link active" data-toggle="pill" href="#popular">Popular</a>
+                              </li>
+                          </ul>
+
+                          <div class="tab-content">
+                            <div id="popular" class="container tab-pane active">
+                                {%if popular_books%}
+                                {%for books in popular_books%}
+                                {% if forloop.counter < 4 %}
+                                <div class="tn-books">
+                                    <div class="tn-title">
+                                        <a href="{%url 'bookapp:get_book_by_id' book.id%}">{{book_book_name|truncatewords:3}}</a>
+                                    </div>
+                                </div>
+                                {%endif%}
+                                {%endfor%}
+                                {%endif%}
+
+                            </div>
+                            <div id="latest" class="container tab-pane fade">
+                                {%if latest_books%}
+                                {%for book in latest_books%}
+                                {% if forloop.counter < 4 %}
+                                <div class="tn-books">
+                                    <div class="tn-title">
+                                        <a href="{%url 'bookapp:get_book_by_id' book.id%}">{{book.book_name|truncatewords:3}}</a>
+                                    </div>
+                                </div>
+                                {%endif%}
+                                {%endfor%}
+                                {%endif%}
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Single News End-->
+{% endblock %}
+

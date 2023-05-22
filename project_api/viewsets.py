@@ -5,8 +5,8 @@ book_details = APIBookViewSet.as_view(
     {'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})
 
 
-editors_list = APIEditorsViewSet.as_view({'get': 'list', 'post': 'create'})
-editor_details = APIEditorsViewSet.as_view(
+author_list = APIAuthorsViewSet.as_view({'get': 'list', 'post': 'create'})
+author_details = APIAuthorsViewSet.as_view(
     {'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})
 
 users_list = APICustomUsersViewSet.as_view({'get': 'list', 'post': 'create'})

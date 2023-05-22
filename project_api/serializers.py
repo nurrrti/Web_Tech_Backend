@@ -49,7 +49,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
     #     return super().to_representation(instance)
 
 
-class EditorSerializer(serializers.HyperlinkedModelSerializer):
+class AuthorSerializer(serializers.HyperlinkedModelSerializer):
     # url = serializers.HyperlinkedIdentityField(view_name='pro_api:editor-detail')
     class Meta:
         model = Author

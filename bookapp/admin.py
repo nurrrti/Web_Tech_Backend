@@ -5,7 +5,7 @@ from bookapp.models import Book, CustomUser, Author, Comment
 
 # Register your models here.
 class BookAdmin(admin.ModelAdmin):
-    fields = ('book_name', 'book_text', 'book_author', 'book_image', 'book_page')
+    fields = ('book_name', 'book_text', 'book_author', 'book_image', 'book_page', 'book_document')
     list_display = ('book_name', 'book_author')
     list_filter = ['book_rating', 'book_author']
     search_fields = ['book_text', 'book_name']
